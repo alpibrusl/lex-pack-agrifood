@@ -1,0 +1,12 @@
+[package]
+name        = "lex-pack-agrifood"
+version     = "0.1.0"
+description = "Agri-food domain pack — origin traceability, lot transformation graph, and EUDR summary over lex-pack-custody."
+
+[dependencies]
+lex-soft        = { git = "https://github.com/alpibrusl/lex-soft" }
+lex-pack-custody = { git = "https://github.com/alpibrusl/lex-pack-custody" }
+lex-trail       = { git = "https://github.com/alpibrusl/lex-trail" }
+lex-web         = { git = "https://github.com/alpibrusl/lex-web" }
+lex-schema      = { git = "https://github.com/alpibrusl/lex-schema" }
+lex-log         = { git = "https://github.com/alpibrusl/lex-log" }
