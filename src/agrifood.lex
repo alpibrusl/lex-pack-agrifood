@@ -232,7 +232,7 @@ fn trace_lot(db :: Db, log :: tlog.Log, lot_ref :: Str, depth :: Int) -> [sql] (
 
 fn mount(r :: router.Router, db :: Db) -> [sql] router.Router {
   let __t := ensure_tables(db)
-  let with_origins := router.route_effectful(r, "POST", "/agrifood/origins", fn (c :: ctx.Ctx) -> [io, time, crypto, random, sql, fs_read, fs_write, net, concurrent, llm, proc] resp.Response {
+  let with_origins := router.route_effectful(r, "POST", "/agrifood/origins", fn (c :: ctx.Ctx) -> [io, time, crypto, random, sql, fs_read, fs_write, net, concurrent, llm, proc, approval] resp.Response {
     match jv.parse(c.body) {
       Err(_) => resp.bad_request("{\"error\":\"invalid json\"}"),
       Ok(j) => {
@@ -281,7 +281,7 @@ fn mount(r :: router.Router, db :: Db) -> [sql] router.Router {
       },
     }
   })
-  let with_transforms := router.route_effectful(with_origins, "POST", "/agrifood/transformations", fn (c :: ctx.Ctx) -> [io, time, crypto, random, sql, fs_read, fs_write, net, concurrent, llm, proc] resp.Response {
+  let with_transforms := router.route_effectful(with_origins, "POST", "/agrifood/transformations", fn (c :: ctx.Ctx) -> [io, time, crypto, random, sql, fs_read, fs_write, net, concurrent, llm, proc, approval] resp.Response {
     match jv.parse(c.body) {
       Err(_) => resp.bad_request("{\"error\":\"invalid json\"}"),
       Ok(j) => {
@@ -324,7 +324,7 @@ fn mount(r :: router.Router, db :: Db) -> [sql] router.Router {
       },
     }
   })
-  router.route_effectful(with_transforms, "GET", "/agrifood/lots/:ref/trace", fn (c :: ctx.Ctx) -> [io, time, crypto, random, sql, fs_read, fs_write, net, concurrent, llm, proc] resp.Response {
+  router.route_effectful(with_transforms, "GET", "/agrifood/lots/:ref/trace", fn (c :: ctx.Ctx) -> [io, time, crypto, random, sql, fs_read, fs_write, net, concurrent, llm, proc, approval] resp.Response {
     let ref := match ctx.path_param(c, "ref") {
       Some(s) => s,
       None => "",
